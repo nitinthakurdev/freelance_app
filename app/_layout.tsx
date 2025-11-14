@@ -1,15 +1,12 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-// eslint-disable-next-line import/no-unresolved
-import "../global.css"
-
+import '@/global.css';
 
 export const unstable_settings = {
   anchor: '(tabs)',
 };
 
 export default function RootLayout() {
-
   return (
     <>
       <Stack>
