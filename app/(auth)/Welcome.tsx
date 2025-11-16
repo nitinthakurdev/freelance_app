@@ -1,11 +1,23 @@
-import React from 'react';
-import { View, Text, ImageBackground, Image, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import logo from '@/assets/logo/logo.png';
 import { HandleHightAcordingly } from '@/utils/heightDifference';
 import { router } from 'expo-router';
+import React, { useEffect } from 'react';
+import { Alert, BackHandler, Dimensions, Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 export default function WelcomeScreen() {
   const { height } = Dimensions.get('window');
+
+  useEffect(() => {
+    const backpress = () => {
+      Alert.alert('Close App', 'Are you sure you want to close ', [
+        { text: 'cancel', onPress: () => null },
+        { text: 'Close', onPress: () => BackHandler.exitApp() },
+      ]);
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', backpress);
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <ScrollView className="flex-1 bg-black">
@@ -29,7 +41,7 @@ export default function WelcomeScreen() {
             </View>
 
             <View className="pb-4">
-              <TouchableOpacity className="h-16 w-full rounded-full bg-blue-600 mb-7 items-center justify-center" onPress={() => router.replace('/(auth)/Login')}>
+              <TouchableOpacity className="h-16 w-full rounded-full bg-background mb-7 items-center justify-center" onPress={() => router.replace('/(auth)/Login')}>
                 <Text className="text-2xl text-white font-bold">Get Started</Text>
               </TouchableOpacity>
               <Text className="text-black/60 text-xs text-center">By continuing you agree to our Terms & Privacy</Text>
